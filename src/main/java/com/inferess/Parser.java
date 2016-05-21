@@ -14,26 +14,23 @@ public class Parser {
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		for(Element p : paragraphs){
-	    	  String text = p.text();
-	    	  text =  text.replace(',', ' ' );
-	    	  text = text.replace('.', ' ' );
-	    	  
-	    	 // System.out.println(text);
-	    	  String[] arr = text.split(" +");
-          lengths.add(arr.length);
-	    	 // System.out.println("Length = "+ arr.length);
-	    	  for(String word: arr){
-	    		  word = word.toLowerCase();
-	    		  if(map.containsKey(word)){
-	    			  int count = map.get(word);
-	    			  count = count+1;
-	    			  map.put(word, count);
-	    		  }else{
-	    			  map.put(word,1);
-	    		  }
-	    	  }
-	      }
-		
+      String text = p.text();
+      text =  text.replace(',', ' ' );
+      text = text.replace('.', ' ' );      
+     
+      String[] arr = text.split(" +");
+      lengths.add(arr.length);     
+      for(String word: arr){
+        word = word.toLowerCase();
+        if(map.containsKey(word)){
+          int count = map.get(word);
+          count = count+1;
+          map.put(word, count);
+        }else{
+          map.put(word,1);
+        }
+      }
+    }		
 		return map;
 	}
 	
@@ -67,29 +64,7 @@ public class Parser {
     
   }
   
-	public static void main(String[] args) throws IOException{
-		    
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
-    System.out.println("Enter your query words ");
-    String query = br.readLine();
-    String[] queries = query.split(" ");    
-    
-		String urls[] = new String[5];
-		ArrayList<HashMap<String,Integer>> docs = new ArrayList<HashMap<String,Integer>>();
-		
-		urls[0] = "https://en.wikipedia.org/wiki/Bootstrap_(front-end_framework)";
-		urls[1] = "https://en.wikipedia.org/wiki/Apache_Spark";
-		urls[2] = "https://en.wikipedia.org/wiki/Apache_Hive";
-		urls[3] = "https://en.wikipedia.org/wiki/Pig_(programming_tool)";
-		urls[4] = "https://en.wikipedia.org/wiki/Apache_HBase";
-		
-    ArrayList<String> titles = new ArrayList<String>();
-    titles.add("BootStrap (front-end framework)");
-    titles.add("Apache Spark");
-    titles.add("Apache Hive");
-    titles.add("Pig (Programming tool)");
-    titles.add("Apache HBase");
-    
+  public void process(String[] urls, String[] queries,ArrayList<HashMap<String,Integer>> docs, ArrayList<String> titles) throws IOException{
     ArrayList<Integer> lengths = new ArrayList<Integer>();
     
 		for(String url: urls){
@@ -117,6 +92,34 @@ public class Parser {
       printResults(q,results,titles,urls);
       System.out.println();
     }
+    
+  }
+  
+	public static void main(String[] args) throws IOException{
+		    
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
+    System.out.println("Enter your query words ");
+    String query = br.readLine();
+    String[] queries = query.split(" ");    
+    
+		String urls[] = new String[5];
+		ArrayList<HashMap<String,Integer>> docs = new ArrayList<HashMap<String,Integer>>();
+		
+		urls[0] = "https://en.wikipedia.org/wiki/Bootstrap_(front-end_framework)";
+		urls[1] = "https://en.wikipedia.org/wiki/Apache_Spark";
+		urls[2] = "https://en.wikipedia.org/wiki/Apache_Hive";
+		urls[3] = "https://en.wikipedia.org/wiki/Pig_(programming_tool)";
+		urls[4] = "https://en.wikipedia.org/wiki/Apache_HBase";
+		
+    ArrayList<String> titles = new ArrayList<String>();
+    titles.add("BootStrap (front-end framework)");
+    titles.add("Apache Spark");
+    titles.add("Apache Hive");
+    titles.add("Pig (Programming tool)");
+    titles.add("Apache HBase");
+    
+    Parser newParser = new Parser();
+    newParser.process(urls,queries,docs,titles);    
            
 	}
 
