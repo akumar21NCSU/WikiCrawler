@@ -10,7 +10,33 @@ import com.inferess.Calculator;
 
 public class Parser {
 
-	public static HashMap<String,Integer> getCount(Elements paragraphs, ArrayList<Integer> lengths){
+  private String urls[];
+  private ArrayList<String> titles;
+  
+  public Parser(){
+    urls = new String[5];
+    urls[0] = "https://en.wikipedia.org/wiki/Coldplay";
+		urls[1] = "https://en.wikipedia.org/wiki/Apache_Spark";
+		urls[2] = "https://en.wikipedia.org/wiki/Apache_Hive";
+		urls[3] = "https://en.wikipedia.org/wiki/Roger_Federer";
+		urls[4] = "https://en.wikipedia.org/wiki/Apache_HBase";
+    
+    titles = new ArrayList<String>();
+    titles.add("Coldplay");
+    titles.add("Apache Spark");
+    titles.add("Apache Hive");
+    titles.add("Roger Federer");
+    titles.add("Apache HBase");
+  }
+  
+  public String[] getUrls(){
+    return urls;
+  }
+  public ArrayList<String> getTitles(){
+    return titles;    
+  }
+
+	public HashMap<String,Integer> getCount(Elements paragraphs, ArrayList<Integer> lengths){
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		for(Element p : paragraphs){
@@ -34,7 +60,7 @@ public class Parser {
 		return map;
 	}
 	
-  public static int getDocCount(ArrayList<HashMap<String,Integer>> docs, String word){
+  public  int getDocCount(ArrayList<HashMap<String,Integer>> docs, String word){
     int count=0;
     for(HashMap<String,Integer> doc : docs){
       if(doc.get(word) != null)
@@ -43,7 +69,7 @@ public class Parser {
     return count;
   }
   
-  public static void printResults(String word, ArrayList<Double> results, ArrayList<String> titles, String[] urls){
+  public  void printResults(String word, ArrayList<Double> results, ArrayList<String> titles, String[] urls){
     System.out.println("For query- "+word +" list of Urls (with highest score first) - ");
     
     for(int itr=0;itr<results.size();itr++){
@@ -87,6 +113,7 @@ public class Parser {
         int totalWords = lengths.get(i);
         int noOfDocs = getDocCount(docs,q);        
         double result = new Calculator().tfIdf(freq, totalWords, urls.length, noOfDocs);
+        //System.out.println("For title "+ titles.get(i)+" result =  "+result);
         results.add(result);               
       }
       printResults(q,results,titles,urls);
@@ -102,24 +129,9 @@ public class Parser {
     String query = br.readLine();
     String[] queries = query.split(" ");    
     
-		String urls[] = new String[5];
-		ArrayList<HashMap<String,Integer>> docs = new ArrayList<HashMap<String,Integer>>();
-		
-		urls[0] = "https://en.wikipedia.org/wiki/Bootstrap_(front-end_framework)";
-		urls[1] = "https://en.wikipedia.org/wiki/Apache_Spark";
-		urls[2] = "https://en.wikipedia.org/wiki/Apache_Hive";
-		urls[3] = "https://en.wikipedia.org/wiki/Pig_(programming_tool)";
-		urls[4] = "https://en.wikipedia.org/wiki/Apache_HBase";
-		
-    ArrayList<String> titles = new ArrayList<String>();
-    titles.add("BootStrap (front-end framework)");
-    titles.add("Apache Spark");
-    titles.add("Apache Hive");
-    titles.add("Pig (Programming tool)");
-    titles.add("Apache HBase");
-    
-    Parser newParser = new Parser();
-    newParser.process(urls,queries,docs,titles);    
+    Parser newParser = new Parser();		
+		ArrayList<HashMap<String,Integer>> docs = new ArrayList<HashMap<String,Integer>>();     
+    newParser.process(newParser.getUrls(),queries,docs,newParser.getTitles());    
            
 	}
 

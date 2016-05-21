@@ -5,7 +5,7 @@ class Calculator {
   def tfIdf(freq: Int, totalWords: Int,totalDocs: Int, nDocs: Int ): Double ={
     
     def tf(): Double = {
-           
+      println("Freq = "+freq +" and totalwords = "+totalWords)  
       return freq.toDouble/totalWords
     }
     def itf():Double = {
