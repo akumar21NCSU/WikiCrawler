@@ -70,11 +70,11 @@ public class Parser {
   }
   
   public  void printResults(String word, ArrayList<Double> results, ArrayList<String> titles, String[] urls){
-    System.out.println("For query- "+word +" list of Urls (with highest score first) - ");
+    System.out.println("For query- '"+word +"' list of Wikipedia page Titles with Urls (with highest score first) - ");
     
     for(int itr=0;itr<results.size();itr++){
       
-      int maxIndex =-1;
+      int maxIndex =itr;
       double maxResult =-1.0;      
       for(int i=0;i<results.size();i++){
         if(results.get(i)> maxResult){
@@ -83,7 +83,7 @@ public class Parser {
         }
         
       }
-      System.out.println(urls[maxIndex] + "    "+titles.get(maxIndex));
+      System.out.println("Wiki Title - "+titles.get(maxIndex)+  "     "+urls[maxIndex] );
       results.set(maxIndex, -1.0);
     }
     
@@ -105,7 +105,7 @@ public class Parser {
       int maxTfIdfIndex = -1;
       ArrayList<Double> results = new ArrayList<Double>();
       
-      for(int i=0;i<5;i++){
+      for(int i=0;i<docs.size();i++){
         HashMap<String,Integer> m = docs.get(i);
         int freq=0;
         if(m.get(q) != null)
@@ -126,8 +126,16 @@ public class Parser {
 		    
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));       
     System.out.println("Enter your query words ");
-    String query = br.readLine();
-    String[] queries = query.split(" ");    
+    String query = br.readLine().trim();
+    if(query.equals("")){
+      System.out.println("Enter atleast one query word");
+      return;
+    }
+    String[] queries = query.split(" +");    
+    if(queries.length > 5){
+      System.out.println("You can query only upto 5 words.");
+      return;
+    }
     
     Parser newParser = new Parser();		
 		ArrayList<HashMap<String,Integer>> docs = new ArrayList<HashMap<String,Integer>>();     
