@@ -17,16 +17,16 @@ public class Parser {
     urls = new String[5];
     urls[0] = "https://en.wikipedia.org/wiki/Coldplay";
 		urls[1] = "https://en.wikipedia.org/wiki/Apache_Spark";
-		urls[2] = "https://en.wikipedia.org/wiki/Apache_Hive";
+		urls[2] = "https://en.wikipedia.org/wiki/AngularJS";
 		urls[3] = "https://en.wikipedia.org/wiki/Roger_Federer";
-		urls[4] = "https://en.wikipedia.org/wiki/Apache_HBase";
+		urls[4] = "https://en.wikipedia.org/wiki/Barack_Obama";
     
     titles = new ArrayList<String>();
     titles.add("Coldplay");
     titles.add("Apache Spark");
-    titles.add("Apache Hive");
+    titles.add("AngularJS");
     titles.add("Roger Federer");
-    titles.add("Apache HBase");
+    titles.add("Barack Obama");
   }
   
   public String[] getUrls(){
@@ -62,6 +62,8 @@ public class Parser {
 	
   public  int getDocCount(ArrayList<HashMap<String,Integer>> docs, String word){
     int count=0;
+   // System.out.println("Size of docs - "+docs.size());
+    //System.out.println("Word is -"+ word);
     for(HashMap<String,Integer> doc : docs){
       if(doc.get(word) != null)
         count++;
