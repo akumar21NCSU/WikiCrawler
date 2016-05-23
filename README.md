@@ -1,7 +1,7 @@
 # WikiCrawler
 A Simple Application to score queried words against static Wiki pages.<br/>
 
-<b>Pre requestite Software </b><br/>
+<b>Pre-requisite Software </b><br/>
 . Maven2 <br/>
 . Java <br/>
 
